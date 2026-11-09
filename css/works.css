@@ -1,0 +1,202 @@
+/* ==========================================================================
+   works.css - Works 一覧ページ(page-works.php)専用
+
+   読み込み順: destyle.css → common.css → works.css
+   ========================================================================== */
+
+
+/* ==========================================================================
+   Page: Works(一覧)
+   ========================================================================== */
+
+.works {
+    position: relative;
+    width: 100%;
+    background-color: var(--color-white);
+}
+
+.works section {
+    padding: 50px 35px;
+    padding-top: 20vh;
+    margin: 0 auto;
+    max-width: 600px;
+    /* 不要なら削除 */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 100px;
+}
+
+/* 作品カード */
+.works__container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.works__container img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background-color: var(--color-gray);
+}
+
+.works__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1px;
+}
+
+.works__title {
+    color: var(--color-text);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: 3px;
+}
+
+.works__category {
+    color: var(--color-text-g);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 1px;
+}
+
+/* ページネーション */
+.works__pagination {
+    width: 100%;
+    padding: 15px 35px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+
+    a {
+        font-family: var(--font-en);
+    }
+
+    .works__pagination--number {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        a {
+            display: flex;
+            width: 30px;
+            height: 30px;
+            padding: 10px;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+
+            border-radius: 50px;
+            border: 1px solid var(--color-border);
+            font-size: 12px;
+        }
+    }
+}
+
+
+/* ----- TB・PC: 2列のZ型(左→右、次の段へ) ----- */
+
+/* TB */
+@media screen and (min-width: 768px) {
+    .works section {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 80px 40px;
+        /* align-items: start; */
+        align-items: center;
+        max-width: 900px;
+    }
+
+    /* .works__container img {
+        aspect-ratio: 4 / 5;
+        object-fit: cover;
+    } */
+
+    .works__pagination {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+}
+
+/* PC */
+@media screen and (min-width: 1024px) {
+    .works section {
+        gap: 100px 60px;
+        max-width: 1100px;
+    }
+
+    .works__pagination {
+        max-width: 1100px;
+    }
+}
+
+
+/* ----- ホバーの表現(やさしく、ゆっくり) ----- */
+
+/* 画像を包むリンク: 拡大しても角がはみ出さないようにする */
+.works__container>a {
+    display: block;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 10px;
+    /* 画像の角の丸みに合わせて調整 */
+}
+
+.works__container img {
+    transition: transform 0.6s ease;
+}
+
+
+/* タイトルの下線(最初は幅0) */
+.works__title {
+    position: relative;
+    padding-bottom: 4px;
+}
+
+.works__title::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--color-text-b);
+    opacity: 0.5;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.7s ease;
+}
+
+/* マウスが使える環境だけで動かす(スマホ・タブレットのタッチでは動かさない) */
+@media (hover: hover) {
+
+    /* ホバー中の作品 → 画像がふんわり拡大 */
+    .works__container:hover img,
+    .works__container:focus-within img {
+        transform: scale(1.03);
+    }
+
+    /* ホバー中の作品 → タイトルの下に線が伸びる */
+    .works__container:hover .works__title::after,
+    .works__container:focus-within .works__title::after {
+        transform: scaleX(1);
+    }
+}
+
+/* 動きを減らす設定の人には、動きを止める */
+@media (prefers-reduced-motion: reduce) {
+
+    .works__container img,
+    .works__title::after {
+        transition: none;
+    }
+}

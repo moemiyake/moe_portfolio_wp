@@ -1,0 +1,805 @@
+/* ==========================================================================
+   style.css - 全ページ共通(変数 / 全体の初期設定 / Header / Footer / 共通部品)
+
+   読み込み順: destyle.css → style.css → (ページ別CSS)
+
+   目次
+   1. Tokens(変数)
+   2. Base(全体の初期設定)
+   3. Layout: Header
+   4. Layout: Footer
+   5. Components(縦書きタイトル / Moreボタン / プロフィール共通 / カテゴリ絞り込み)
+
+   ブレークポイント(モバイルファースト)
+   SP: ~767px / TB: 768px~ / PC: 1024px~
+   ※ script.js(window.innerWidth >= 1024)と  front-page.php の <picture> も同じ境目
+   ========================================================================== */
+
+
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+
+:root {
+    /* 文字色 */
+    --color-text: #3c3c3c;
+    --color-text-g: #B3B3B3;
+    --color-text-b: #84B5C5;
+
+    /* 背景・面 */
+    --color-white: #fff;
+    --color-gray: #F8F8F8;
+    --color-moegi: #AACF53;
+    --color-moegi-dark: #8ab535;
+
+    /* RGB値(rgba(var(--xxx-rgb), 0.5) の形で使う) */
+    --color-blue-rgb: 85, 159, 183;
+    --color-skyblue-rgb: 132, 181, 197;
+    --color-moegi-rgb: 170, 207, 83;
+    --color-text-g-rgb: 179, 179, 179;
+
+    /* 線・枠 */
+    --color-border: #777;
+    --color-border-light: #e5e5e5;
+    --color-border-dark: #5c5c5c;
+    --color-frame-side: #bababa;
+
+    /* フォント */
+    --font-en: "Lato", sans-serif;
+}
+
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* 文字の基本設定(子要素に継承される)。rem の基準を14pxに保つため html に置く */
+html {
+    scroll-behavior: smooth;
+    font-family: 'Noto Sans JP', sans-serif;
+    color: #3c3c3c;
+    font-size: 14px;
+    letter-spacing: 2px;
+    line-height: 1.5;
+}
+
+/* 中身が短いページでも画面いっぱいにする(フッターを一番下に置くため。.footer の margin-top: auto と対) */
+body {
+    min-height: 100vh;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    text-decoration: none;
+    transition: opacity 0.5s ease;
+}
+
+a:hover {
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+li {
+    list-style: none;
+}
+
+img {
+    width: 100%;
+    border-radius: 7px;
+}
+
+/* 見出し(各ページの縦書きタイトルは 05 で上書き) */
+h2 {
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: 48px;
+    letter-spacing: 1.5px;
+    padding: 0 30px;
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   Layout: Header
+   SP: ハンバーガー + 右から出るカーテン / PC(1024px~): 右上に横並びナビ
+   ========================================================================== */
+
+/* ----- ハンバーガーボタン ----- */
+.header__hamburger {
+    position: fixed;
+    z-index: 10;
+    cursor: pointer;
+
+    width: 30px;
+    height: 30px;
+
+    top: 20px;
+    right: 20px;
+}
+
+/* 2本線と、開いたときの閉じるアイコン */
+.header__hamburger span::before,
+.header__hamburger span::after {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    content: '';
+    background-color: var(--color-text);
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.header__hamburger span::before {
+    top: 7px;
+}
+
+.header__hamburger span::after {
+    bottom: 7px;
+}
+
+.header__hamburger::after {
+    position: absolute;
+    inset: 0;
+    width: 30px;
+    height: 28px;
+    content: '';
+    background: url("../img/menu__close.svg") center / contain no-repeat;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+/* 開いたらバツになる */
+header.is-open .header__hamburger span::before,
+header.is-open .header__hamburger span::after {
+    opacity: 0;
+}
+
+header.is-open .header__hamburger::after {
+    opacity: 1;
+}
+
+/* ----- メニュー共通 ----- */
+.header__list ul li a {
+    font-size: 30px;
+}
+
+.header__list--pc {
+    display: none;
+}
+
+/* ----- SP: カーテン ----- */
+.header__list--sp {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 80%;
+    height: 100vh;
+    height: 100svh;
+    z-index: 7;
+    isolation: isolate;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    /* background-color: rgba(var(--color-skyblue-rgb), 0.95); */
+    transform: translateX(110%);
+    transition: transform 0.6s ease-in-out;
+}
+
+/* カーテン本体だけを揺らし、ナビ文字は親の揺れに巻き込まない */
+.header__list--sp::before {
+    content: "";
+    position: absolute;
+    inset: -20px -20px -20px 0;
+    background-color: rgba(var(--color-skyblue-rgb), 0.95);
+    backdrop-filter: blur(5px);
+    z-index: 0;
+}
+
+/* カーテン端の揺れるパーツ */
+.header__list--sp::after {
+    content: "";
+    position: absolute;
+    top: -12px;
+    right: -10px;
+    width: 135px;
+    height: calc(100% + 12px);
+    background: url("../img/menu__curtain.svg") center / 100% 100% no-repeat;
+    z-index: 1;
+}
+
+/* 開いた状態 + アニメーション */
+header.is-open .header__list--sp {
+    transform: translateX(0);
+}
+
+header.is-open .header__list--sp::before {
+    animation:
+        header__fade-in 0.2s ease-out both,
+        header__list1--keyframes2 3.5s ease-in-out;
+}
+
+header.is-open .header__list--sp::after {
+    animation:
+        header__fade-in 0.3s ease-out both,
+        header__list2--keyframes2 4s linear,
+        header__list2--keyframes3 4s linear;
+}
+
+.header__list--sp ul {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    font-family: var(--font-en);
+    font-weight: 300;
+    letter-spacing: 3px;
+    line-height: 1;
+    transform: translateY(-30px);
+}
+
+.header__list--sp ul li a {
+    color: var(--color-white);
+    font-size: 32px;
+    font-weight: 300;
+}
+
+header.is-open .header__list--sp li:nth-child(1) {
+    animation: header__menu-item 3.5s linear both;
+}
+
+header.is-open .header__list--sp li:nth-child(2) {
+    animation: header__menu-item 3.5s linear 0.34s both;
+}
+
+header.is-open .header__list--sp li:nth-child(3) {
+    animation: header__menu-item 3.5s linear 0.67s both;
+}
+
+.header__name {
+    position: absolute;
+    bottom: 4.5%;
+    left: 50%;
+    z-index: 2;
+    transform: translateX(-50%);
+    font-size: 32px;
+    font-family: var(--font-en);
+    font-weight: 300;
+    color: var(--color-white);
+    white-space: nowrap;
+}
+
+header.is-open .header__name {
+    animation: header__fade-in 1s cubic-bezier(0.22, 1, 0.36, 1) 1.91s both;
+}
+
+/* ----- PC ----- */
+@media screen and (min-width: 1024px) {
+
+    .header__list--sp,
+    .header__hamburger--sp {
+        display: none;
+    }
+
+    .header__list--pc {
+        display: flex;
+
+        ul {
+            left: 0;
+            position: fixed;
+            z-index: 10;
+            width: 100%;
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            padding-right: 5vw;
+            padding-top: 1.5rem;
+            font-size: 1.5rem;
+            gap: 2rem;
+            font-family: var(--font-en);
+            font-weight: 300;
+            letter-spacing: 3px;
+        }
+    }
+}
+
+/* ----- カーテンとメニューのアニメーション(keyframes) ----- */
+
+@keyframes header__fade-in {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
+/* カーテン本体: 右からスライドして揺れて止まる */
+@keyframes header__list1--keyframes2 {
+    0% {
+        animation-timing-function: cubic-bezier(0.22, 0.68, 0.36, 1);
+        transform: translate(340px, -12px);
+    }
+
+    27.143% {
+        animation-timing-function: cubic-bezier(0.34, 0.8, 0.64, 1);
+        transform: translate(-10px, 5px);
+    }
+
+    43% {
+        animation-timing-function: ease;
+        transform: translate(20px, 2px);
+    }
+
+    70% {
+        animation-timing-function: ease-in-out;
+        transform: translate(-5px, 0px);
+    }
+
+    100% {
+        transform: translate(0px, 0px);
+    }
+}
+
+/* 左の帯(::after): 幅の揺れ */
+@keyframes header__list2--keyframes2 {
+    0% {
+        width: 128px;
+    }
+
+    4% {
+        animation-timing-function: cubic-bezier(0.22, 0.68, 0.36, 1);
+        width: 128px;
+    }
+
+    17.143% {
+        animation-timing-function: ease;
+        width: 120px;
+    }
+
+    32.857% {
+        animation-timing-function: cubic-bezier(0.34, 0.8, 0.64, 1);
+        width: 150px;
+    }
+
+    52.857% {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        width: 120px;
+    }
+
+    80% {
+        width: 140px;
+    }
+
+    100% {
+        width: 135px;
+    }
+}
+
+/* 左の帯(::after): 位置の揺れ */
+@keyframes header__list2--keyframes3 {
+    0% {
+        translate: 320px -8px;
+    }
+
+    4% {
+        animation-timing-function: cubic-bezier(0.22, 0.68, 0.36, 1);
+        translate: 320px -8px;
+    }
+
+    30% {
+        animation-timing-function: cubic-bezier(0.34, 0.8, 0.64, 1);
+        translate: -8px 4px;
+    }
+
+    47.143% {
+        animation-timing-function: ease;
+        translate: 5px 1.5px;
+    }
+
+    62.857% {
+        animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+        translate: -1.5px -0.5px;
+    }
+
+    78.571% {
+        translate: 0px 0px;
+    }
+
+    100% {
+        translate: 0px 0px;
+    }
+}
+
+@keyframes header__menu-item {
+    0% {
+        opacity: 0;
+        translate: 15px 0;
+    }
+
+    9.714% {
+        animation-timing-function: ease-in-out;
+        translate: 15px 0;
+    }
+
+    25.714% {
+        animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+        opacity: 0;
+    }
+
+    54% {
+        opacity: 1;
+        translate: 0 0;
+    }
+
+    100% {
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+header.is-open .header__hamburger::after {
+    animation: header__fade-in 0.42s cubic-bezier(0.22, 1, 0.36, 1) 0.93s both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .header__list--sp {
+        transition: none;
+    }
+
+    header.is-open .header__list--sp {
+        transform: translateX(0);
+        animation: none;
+    }
+
+    header.is-open .header__list--sp::before,
+    header.is-open .header__list--sp::after,
+    header.is-open .header__list--sp li,
+    header.is-open .header__name,
+    header.is-open .header__hamburger::after {
+        animation: none;
+        opacity: 1;
+        translate: 0 0;
+    }
+}
+
+
+/* ==========================================================================
+   Layout: Footer
+   ========================================================================== */
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* margin-top: auto で、中身が短いページでも画面の一番下に置く。上の余白60pxは padding で確保 */
+    margin: auto auto 30px;
+    padding-top: 60px;
+    gap: 40px;
+
+    font-family: var(--font-en);
+    font-weight: 300;
+    letter-spacing: 3px;
+}
+
+.footer__head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+
+/* 植木鉢(ページ先頭に戻る) */
+.footer__pageTop {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    gap: 3px;
+}
+
+.footer__pageTop--plant {
+    width: 40px;
+}
+
+.footer__pageTop-arrow {
+    width: 8px;
+    transition: transform 0.5s ease;
+}
+
+.footer__pageTop:hover .footer__pageTop-arrow {
+    transform: translateY(-5px);
+}
+
+.footer__list ul {
+    display: flex;
+    gap: 40px;
+}
+
+.footer__list li a {
+    font-size: 20px;
+}
+
+.footer__copyright {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    margin-bottom: 10px;
+}
+
+
+/* ----- 削除候補(コメントアウト中。問題なければ削除してOK) ----- */
+
+/* <span> が1つだけで、インライン要素のため transform / top / bottom が効かない
+header.is-open span:nth-child(1) {
+    transform: rotate(-45deg);
+    top: 6px;
+}
+
+header.is-open span:nth-child(2) {
+    transform: rotate(45deg);
+    bottom: 6px;
+}
+*/
+
+
+/* ==========================================================================
+   Components
+   ========================================================================== */
+
+/* ----- 縦書きタイトル(Works / About / WorksItem 共通) ----- */
+
+/* 中身は position: fixed のものだけなので、高さは0 */
+.works__fix,
+.about__fix {
+    width: 100%;
+}
+
+.works h2,
+.about h2,
+.worksItem h2 {
+    position: fixed;
+    z-index: 5;
+    /* Swiperのwrapper(z-index: 1)・Exhibitionの枠(1〜3)より前、SPメニューのカーテン(7)より後ろ */
+    top: 20px;
+    left: 20px;
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: 32px;
+    letter-spacing: 1px;
+
+    padding: 0;
+    transform: rotate(90deg) translateY(-1em);
+    transform-origin: top left;
+}
+
+/* ----- Moreボタン(Top / WorksItem 共通) ----- */
+
+.button {
+    cursor: pointer;
+}
+
+.button--more {
+    font-family: var(--font-en);
+    font-size: 24px;
+    font-weight: 300;
+    letter-spacing: 1.5px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.button__arrow {
+    transition: transform 0.5s ease;
+}
+
+.button--more:hover .button__arrow {
+    transform: translateX(5px);
+}
+
+/* Moreボタンを右寄せにする枠(Top) */
+.top__works__more,
+.top__about__more {
+    display: flex;
+    padding: 0 30px;
+    justify-content: flex-end;
+    align-items: center;
+    align-self: stretch;
+}
+
+/* ----- プロフィール(Top / About 共通) -----
+   ※ PCのgrid指定はトップ用。Aboutページ側は about.css の .about__me 内で上書きしている */
+
+.about__box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    align-self: stretch;
+    padding: 30px;
+}
+
+.about__img {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-self: stretch;
+}
+
+.about__img img {
+    width: 60%;
+    border-radius: 30px;
+    object-fit: cover;
+}
+
+.about__name {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.about__name--ja {
+    font-size: 18px;
+    letter-spacing: 3px;
+}
+
+.about__name--en {
+    font-size: 12px;
+    letter-spacing: 1.5px;
+    color: var(--color-moegi);
+    font-family: var(--font-en);
+}
+
+.about__text {
+    padding: 10px 30px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.about__text p {
+    font-size: 13px;
+    line-height: 26px;
+    letter-spacing: 0.8px;
+    width: 100%;
+    text-align: left;
+}
+
+/* TB */
+@media screen and (min-width: 768px) {
+    .about__img img {
+        width: 30vw;
+        max-width: 200px;
+    }
+}
+
+/* PC */
+@media screen and (min-width: 1024px) {
+    .about__box {
+        width: 70%;
+        max-width: 1000px;
+        margin: 0 auto;
+
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(2, auto);
+        grid-column-gap: 0px;
+        grid-row-gap: 0px;
+
+        align-items: start;
+    }
+
+    .about__img {
+        grid-area: 1 / 1 / 3 / 2;
+    }
+
+    .about__img img {
+        width: 100%;
+        max-width: 250px;
+        height: auto;
+        border-radius: 10px;
+    }
+
+    .about__name {
+        grid-area: 1 / 2 / 2 / 3;
+        align-self: end;
+        align-items: start;
+        padding: 0 30px;
+        font-size: 24px;
+        margin-bottom: 10px;
+    }
+
+    .about__text {
+        grid-area: 2 / 2 / 3 / 3;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+}
+
+
+/* ----- カテゴリ絞り込み(Works / Works Item 共通。画面下に固定) ----- */
+
+.works__headerCategory {
+    position: fixed;
+    z-index: 10;
+    bottom: 5px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 90%;
+    overflow-x: auto;
+    overflow-y: hidden;
+    white-space: nowrap;
+    text-align: center;
+
+    ul {
+        display: inline-flex;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 10px;
+
+        li a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 5px 10px;
+
+            border-radius: 30px;
+            border: 1px solid var(--color-border);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(1.5px);
+
+            color: var(--color-text);
+            font-family: var(--font-en);
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 1px;
+        }
+    }
+}
+
+
+/* ----- 削除候補(コメントアウト中。問題なければ削除してOK) ----- */
+
+/* 後ろの `.works h2 { padding: 0 }`(このファイルの縦書きタイトル)に上書きされて効いていない(旧: タブレット用)
+@media screen and (min-width: 768px) {
+    .works h2 {
+        padding: 0 60px;
+    }
+}
+*/
+
+/* JSのアニメーション(最初は非表示にしておく) */
+.fadein {
+    opacity: 0;
+}
+
+.fadein_2 {
+    opacity: 0;
+    translate: 0 3rem;
+}
+
+.fadein_3 {
+    opacity: 0;
+    translate: 0 2rem;
+}
+
+.fadein_4 {
+    opacity: 0;
+}
