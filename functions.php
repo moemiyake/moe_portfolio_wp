@@ -103,3 +103,8 @@ add_filter('pre_get_document_title', function ($title) {
 
     return $title;
 });
+
+// サイトマップから、ユーザー(投稿者)のURLを外す
+add_filter('wp_sitemaps_add_provider', function ($provider, $name) {
+    return ($name === 'users') ? false : $provider;
+}, 10, 2);

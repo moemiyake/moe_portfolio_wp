@@ -803,3 +803,45 @@ header.is-open span:nth-child(2) {
 .fadein_4 {
     opacity: 0;
 }
+
+
+
+/* 404ページ */
+.notFound {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 140px 20px 120px;
+    text-align: center;
+}
+
+.notFound__image {
+    width: 66px;
+    /* デザインの大きさ。画像に合わせて調整 */
+    height: auto;
+}
+
+.notFound__title {
+    margin-top: 40px;
+    font-size: 1.05rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+}
+
+.notFound__text {
+    margin-top: 32px;
+    font-size: 0.8rem;
+    line-height: 2.2;
+    letter-spacing: 0.1em;
+}
+
+.notFound .button {
+    margin-top: 40px;
+}
+
+@media (min-width: 768px) {
+    .notFound {
+        padding: 190px 20px 360px;
+        /* 上は、ヘッダーとの間。下は、フッターまでの余白 */
+    }
+}
