@@ -29,26 +29,9 @@
     padding-top: 130px;
 }
 
-/* 灰色の箱。作品は切らずに、全体が見えるように中央に置く */
-.worksItem__imgBox {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    padding: 12% 10%;
-    background-color: var(--color-gray);
-    border-radius: 7px;
-}
-
+/* SPは画像をそのまま横幅いっぱいに表示(灰色の箱はPCだけ) */
 .worksItem__img {
-    display: block;
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 60vh;
-    object-fit: contain;
-    border-radius: 4px;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    border-radius: 7px;
 }
 
 /* 右側(説明文と挿絵) */
@@ -210,14 +193,28 @@
         align-items: center;
     }
 
+    /* 灰色の箱。作品は切らずに、全体が見えるように中央に置く */
     /* 画面の高さに合わせた箱。上下に少しすき間 */
     .worksItem__imgBox {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
         height: 90vh;
         padding: 8% 10%;
+        background-color: var(--color-gray);
+        border-radius: 7px;
     }
 
     .worksItem__img {
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: 100%;
         max-height: 100%;
+        object-fit: contain;
+        border-radius: 4px;
+        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
     }
 
     .worksItem__fixRight {

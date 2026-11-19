@@ -40,7 +40,7 @@ $all_terms  = get_terms(array('taxonomy' => 'works_category', 'hide_empty' => tr
             $w_cat   = ($w_terms && !is_wp_error($w_terms)) ? $w_terms[0]->name : '';
         ?>
         <div class="works__container fadein_2">
-            <a href="<?php the_permalink(); ?>"><?php echo moe_plain_img(get_post_thumbnail_id(), moe_works_border_class(), 'large'); ?></a>
+            <a href="<?php the_permalink(); ?>"<?php echo moe_works_has_border() ? ' class="has-border"' : ''; ?>><?php echo moe_plain_img(get_post_thumbnail_id(), '', 'large'); ?></a>
             <div class="works__content">
                 <h3 class="works__title">
                     <?php the_title(); ?>

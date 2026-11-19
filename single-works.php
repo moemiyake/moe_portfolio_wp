@@ -174,8 +174,8 @@
             ?>
                     <article class="exhibition__card swiper-slide">
                         <a class="exhibition__cardLink" href="<?php the_permalink(); ?>">
-                            <span class="exhibition__cardImageWrap">
-                                <?php echo moe_plain_img(get_post_thumbnail_id(), trim('exhibition__cardImage ' . moe_works_border_class()), 'medium'); ?>
+                            <span class="<?php echo esc_attr(trim('exhibition__cardImageWrap ' . moe_works_border_class())); ?>">
+                                <?php echo moe_plain_img(get_post_thumbnail_id(), 'exhibition__cardImage', 'medium'); ?>
                             </span>
                             <div class="exhibition__cardContent">
                                 <h4 class="exhibition__cardTitle"><?php the_title(); ?></h4>
