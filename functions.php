@@ -79,6 +79,20 @@ function moe_plain_img($id, $class = '', $size = 'full')
     return '<img' . $class_attr . ' src="' . esc_url($src) . '" alt="' . esc_attr($alt) . '">';
 }
 
+// 端が白くてサイトの背景と同化してしまう作品（タイトルで指定）
+// ここに作品タイトルを足すと、その作品の画像に薄いグレーの枠線がつく
+function moe_works_has_border($post_id = null)
+{
+    $titles = array('Buon appetito!', 'ポートフォリオ');
+    return in_array(trim(get_the_title($post_id)), $titles, true);
+}
+
+// 枠線が必要な作品なら 'has-border' を返す（class に足して使う）
+function moe_works_border_class($post_id = null)
+{
+    return moe_works_has_border($post_id) ? 'has-border' : '';
+}
+
 // 作品詳細ページだけ works-item.css を読み込む
 add_action('wp_enqueue_scripts', function () {
     if (is_singular('works')) {

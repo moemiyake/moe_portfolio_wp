@@ -25,7 +25,10 @@
         <!-- 各作品のFV -->
         <!-- pcでは左に固定 -->
         <div class="worksItem__fixLeft">
-            <?php echo moe_plain_img(get_post_thumbnail_id(), '', 'full'); ?>
+            <!-- 灰色の箱の中に、作品の全体が見えるように置く -->
+            <div class="worksItem__imgBox">
+                <?php echo moe_plain_img(get_post_thumbnail_id(), trim('worksItem__img ' . moe_works_border_class()), 'full'); ?>
+            </div>
         </div>
 
         <!-- 説明文と挿絵 -->
@@ -172,7 +175,7 @@
                     <article class="exhibition__card swiper-slide">
                         <a class="exhibition__cardLink" href="<?php the_permalink(); ?>">
                             <span class="exhibition__cardImageWrap">
-                                <?php echo moe_plain_img(get_post_thumbnail_id(), 'exhibition__cardImage', 'medium'); ?>
+                                <?php echo moe_plain_img(get_post_thumbnail_id(), trim('exhibition__cardImage ' . moe_works_border_class()), 'medium'); ?>
                             </span>
                             <div class="exhibition__cardContent">
                                 <h4 class="exhibition__cardTitle"><?php the_title(); ?></h4>

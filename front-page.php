@@ -91,7 +91,7 @@
                     <div class="swiper-slide">
                         <a class="top__works__link" href="<?php the_permalink(); ?>">
                             <div class="top__works__image">
-                                <?php the_post_thumbnail('large'); ?>
+                                <?php the_post_thumbnail('large', moe_works_has_border() ? array('class' => 'wp-post-image has-border') : ''); ?>
                             </div>
                             <div class="top__works__content">
                                 <h3 class="top__works__title"><?php the_title(); ?></h3>
@@ -134,8 +134,8 @@
         </div>
         <div class="about__text">
             <p>
-                「コツコツやれば何でも作れる」という言葉をモットーに、丁寧かつスピーディに制作をします。<br>
-                親しみやすさと、ユーザーの心を動かすデザイン制作を目指しています。
+                「コツコツと丁寧に作る」という言葉をモットーに、丁寧に制作をします。<br>
+                親しみやすさと、ユーザーが使いやすい「心地いいデザイン」の制作を目指しています。
             </p>
             <p>
                 特技は、小さな子供と仲良くなること。
