@@ -269,6 +269,14 @@ header.is-open .header__list--sp li:nth-child(3) {
     animation: header__menu-item 3.5s linear 0.67s both;
 }
 
+header.is-open .header__list--sp li:nth-child(4) {
+    animation: header__menu-item 3.5s linear 1s both;
+}
+
+header.is-open .header__list--sp li:nth-child(5) {
+    animation: header__menu-item 3.5s linear 1.33s both;
+}
+
 .header__name {
     position: absolute;
     bottom: 4.5%;
@@ -528,6 +536,15 @@ header.is-open .header__hamburger::after {
 .footer__list ul {
     display: flex;
     gap: 40px;
+}
+
+/* プライバシーポリシーへのリンク(コピーライトの上) */
+.footer__privacy {
+    font-family: "Noto Sans JP", sans-serif;
+    font-size: 12px;
+    font-weight: 200;
+    letter-spacing: 1.5px;
+    margin-bottom: -33px; /* コピーライトとの間を 7px に(.footer の gap 40px から引く) */
 }
 
 .footer__list li a {

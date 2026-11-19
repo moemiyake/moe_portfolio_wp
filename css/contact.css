@@ -1,0 +1,385 @@
+/* ==========================================================================
+   contact.css - サービス(page-service.php)・お問い合わせ(page-contact.php)・
+                 プライバシーポリシー(page-privacy-policy.php)専用
+
+   読み込み順: destyle.css → style.css → contact.css
+   デザイン: Figma「ポートフォリオ 料金・お問い合わせ・プライバシー」(2026-11-17、2026-11-18 社長の修正を反映)
+
+   文字間隔のルール(既存ページに合わせる)
+   本文14px = 2px(html から継承) / 説明13px = 1.5px / 見出し18〜24px = 3px / 英字ラベル = 3px
+   ========================================================================== */
+
+
+/* ----- 縦書きタイトル(Works / About と同じ見た目) ----- */
+
+.contact__fix {
+    width: 100%;
+}
+
+.service h2,
+.contact h2,
+.policy h2 {
+    position: fixed;
+    z-index: 5;
+    top: 20px;
+    left: 20px;
+    font-family: var(--font-en);
+    font-weight: 300;
+    font-size: 32px;
+    letter-spacing: 1px;
+    padding: 0;
+    transform: rotate(90deg) translateY(-1em);
+    transform-origin: top left;
+}
+
+
+/* ----- 本文の枠 ----- */
+
+/* ヘッダーは position: fixed なので、その高さ分(SP 64px)＋30px を上に空ける */
+.contact__main {
+    width: 100%;
+    padding: 94px 35px 70px;
+}
+
+.contact__box {
+    max-width: 720px;
+    margin: 0 auto;
+    line-height: 1.9;
+}
+
+.contact__box a {
+    color: var(--color-text-b);
+    text-decoration: underline;
+}
+
+
+/* ----- ページの見出し ----- */
+
+.contact__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    margin: 0 auto 40px;
+    line-height: 1.2;
+
+    h3 {
+        color: var(--color-text);
+        font-size: 24px;
+        font-weight: 500;
+        letter-spacing: 3px;
+    }
+
+    p {
+        color: var(--color-moegi);
+        font-family: var(--font-en);
+        font-size: 14px;
+        letter-spacing: 3px;
+    }
+}
+
+
+/* ----- 小見出し(下に萌黄の破線・文字は濃い緑) ----- */
+
+/* 破線は border の dashed だと長さと間隔を決められないので、背景の画像で描く
+   Figma: 太さ2px・線5px/間5px・端が丸(見た目は 長さ7pxの丸い線を10pxおき) */
+.price__heading,
+.policy__body > h3 {
+    padding: 10px 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='2'%3E%3Crect width='7' height='2' rx='1' fill='%23aacf53'/%3E%3C/svg%3E");
+    background-position: left bottom;
+    background-repeat: repeat-x;
+    background-size: 10px 2px;
+    color: var(--color-moegi-dark);
+    font-size: 18px;
+    font-weight: 500;
+    letter-spacing: 3px;
+    line-height: 1.3;
+}
+
+/* サービスページは中央、プライバシーポリシーは左寄せ */
+.price__heading {
+    text-align: center;
+}
+
+
+/* ==========================================================================
+   サービス(料金)ページ
+   ========================================================================== */
+
+.price__lead {
+    margin-bottom: 60px;
+}
+
+.price__group {
+    margin-bottom: 60px;
+}
+
+.price__heading {
+    margin-bottom: 20px;
+}
+
+/* ----- 料金の行 ----- */
+
+.price__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--color-border-light);
+    line-height: 1.3;
+
+    dt {
+        font-weight: 500;
+
+        span {
+            display: block;
+            margin-top: 2px;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 1.5px;
+            color: var(--color-border);
+        }
+    }
+
+    dd {
+        flex-shrink: 0;
+        font-family: var(--font-en);
+        font-size: 22px;
+        letter-spacing: 1px;
+
+        small {
+            font-family: "Noto Sans JP", sans-serif;
+            font-size: 13px;
+            letter-spacing: 1px;
+            margin-left: 2px;
+        }
+    }
+}
+
+/* ----- 作家さんパック(おすすめの枠) ----- */
+
+.price__group--pick {
+    position: relative;
+    margin-top: -40px; /* 上の .price__group との間を 20px に */
+    padding: 14px 14px 12px;
+    border-radius: 7px;
+    background-color: rgba(var(--color-moegi-rgb), 0.15);
+
+    .price__heading {
+        margin-bottom: 8px;
+        padding: 2px 0 10px;
+    }
+
+    .price__item {
+        border-bottom: 0;
+    }
+}
+
+/* SP: 枠の右下に、2行で */
+.price__badge {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 12px 7px 7px 12px;
+    border-radius: 30px 0 7px 0;
+    background-color: var(--color-moegi);
+    color: var(--color-white);
+    font-size: 12px;
+    letter-spacing: 1px;
+    line-height: 1.5;
+    text-align: center;
+
+    span {
+        display: block;
+    }
+}
+
+/* 「Instagram投稿画像3枚」を途中で折り返さない(Figmaと同じ2行に) */
+.price__nowrap {
+    font-weight: inherit;
+    white-space: nowrap;
+}
+
+/* SP: バッジに文字がかぶらないよう、作家さんパックの説明は少し短く折り返す */
+.price__group--pick .price__item dt {
+    padding-bottom: 20px;
+}
+
+.price__note {
+    margin: -36px 0 60px; /* 上のグループとの間を 24px に */
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--color-border);
+}
+
+/* ----- ご依頼の流れ ----- */
+
+.price__flow li {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    padding: 15px 0 15px 8px;
+}
+
+.price__flowNum {
+    flex-shrink: 0;
+    width: 28px;
+    color: var(--color-moegi);
+    font-family: var(--font-en);
+    font-size: 48px;
+    font-weight: 300; /* Figma は ExtraLight(200)。読み込んでいる Lato にないので Light(300) */
+    letter-spacing: 0;
+    line-height: 1.2;
+    text-align: center;
+}
+
+.price__flowBody {
+    line-height: 1.5;
+
+    b {
+        display: block;
+        margin-bottom: 2px;
+        font-weight: 500;
+    }
+}
+
+/* ----- お問い合わせボタン ----- */
+
+.price__cta {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
+.contact__box a.price__button {
+    display: inline-block;
+    padding: 14px 40px;
+    border-radius: 999px;
+    background-color: var(--color-moegi);
+    color: var(--color-white);
+    text-decoration: none;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        background-color: var(--color-moegi-dark);
+        opacity: 1;
+    }
+}
+
+
+/* ==========================================================================
+   お問い合わせページ
+   ========================================================================== */
+
+.contact__lead {
+    margin-bottom: 24px;
+}
+
+.contact__form {
+    margin: 40px 0;
+
+    /* スマホでもはみ出さないよう、幅をいっぱいに */
+    iframe {
+        display: block;
+        width: 100%;
+        max-width: 640px;
+        margin: 0 auto;
+        border: 0;
+    }
+}
+
+.contact__privacy {
+    font-size: 13px;
+}
+
+
+/* ==========================================================================
+   プライバシーポリシー
+   ========================================================================== */
+
+.policy__body {
+    > h3 {
+        margin: 36px 0 8px;
+    }
+
+    > p {
+        margin-bottom: 4px;
+    }
+
+    > ul li::before {
+        content: "・";
+    }
+}
+
+
+/* ==========================================================================
+   TB・PC
+   ========================================================================== */
+
+@media screen and (min-width: 768px) {
+    .contact__main {
+        padding: 120px 0 120px;
+    }
+
+    .price__lead {
+        margin-bottom: 50px;
+    }
+
+    .price__group {
+        margin-bottom: 50px;
+    }
+
+    .price__heading {
+        margin-bottom: 8px;
+    }
+
+    /* PC: 作家さんパックの枠 */
+    .price__group--pick {
+        margin-top: -30px; /* 上のグループとの間を 20px に */
+        padding: 20px 20px 12px;
+
+        .price__heading {
+            padding-top: 0;
+        }
+
+        .price__item dt {
+            padding-bottom: 0;
+        }
+    }
+
+    /* PC: バッジは枠の左上に、1行で */
+    .price__badge {
+        top: 0;
+        left: 0;
+        right: auto;
+        bottom: auto;
+        padding: 6px 20px 10px 12px;
+        border-radius: 7px 0 30px 0;
+        text-align: left;
+
+        span {
+            display: inline;
+        }
+    }
+
+    .contact__box a.price__button {
+        padding: 14px 46px;
+    }
+
+    .price__note {
+        margin: -26px 0 50px; /* 上との間 24px */
+        font-size: 13px;
+        line-height: 1.9;
+    }
+}
+
+@media screen and (min-width: 1024px) {
+    /* PC のヘッダー(高さ 約90px)の下に 120px */
+    .contact__main {
+        padding-top: 210px;
+    }
+}

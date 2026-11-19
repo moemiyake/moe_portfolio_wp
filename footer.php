@@ -17,6 +17,7 @@
             </div>
         </div>
         <!-- コピーライト -->
+        <a class="footer__privacy" href="<?php echo home_url('/privacy-policy/'); ?>">プライバシーポリシー</a>
         <small class="footer__copyright">© 2026 Moe Miyake</small>
     </footer>
 

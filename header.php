@@ -36,7 +36,7 @@
 </head>
 
 <?php
-$body_class = is_front_page() ? 'top' : (is_singular('works') ? 'worksItem' : ((is_page('works') || is_tax('works_category')) ? 'works' : (is_page('about') ? 'about' : '')));
+$body_class = is_front_page() ? 'top' : (is_singular('works') ? 'worksItem' : ((is_page('works') || is_tax('works_category')) ? 'works' : (is_page('about') ? 'about' : (is_page('service') ? 'service' : (is_page('contact') ? 'contact' : (is_page('privacy-policy') ? 'policy' : ''))))));
 ?>
 
 <body class="<?php echo esc_attr($body_class); ?>" id="top">
@@ -61,6 +61,8 @@ $body_class = is_front_page() ? 'top' : (is_singular('works') ? 'worksItem' : ((
                 <li><a href="<?php echo home_url('/'); ?>">Top</a></li>
                 <li><a href="<?php echo home_url('/works/'); ?>">Works</a></li>
                 <li><a href="<?php echo home_url('/about/'); ?>">About</a></li>
+                <li><a href="<?php echo home_url('/service/'); ?>">Service</a></li>
+                <li><a href="<?php echo home_url('/contact/'); ?>">Contact</a></li>
             </ul>
             <h1 class="header__name">MOE MIYAKE</h1>
         </nav>
@@ -71,6 +73,8 @@ $body_class = is_front_page() ? 'top' : (is_singular('works') ? 'worksItem' : ((
                 <li><a href="<?php echo home_url('/'); ?>">Top</a></li>
                 <li><a href="<?php echo home_url('/works/'); ?>">Works</a></li>
                 <li><a href="<?php echo home_url('/about/'); ?>">About</a></li>
+                <li><a href="<?php echo home_url('/service/'); ?>">Service</a></li>
+                <li><a href="<?php echo home_url('/contact/'); ?>">Contact</a></li>
             </ul>
         </nav>
     </header>

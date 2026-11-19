@@ -18,6 +18,10 @@ function moe_portfolio_assets()
         wp_enqueue_style('moe-about', $uri . '/css/about.css', array('moe-style'), filemtime($dir . '/css/about.css'));
     }
 
+    if (is_page('contact') || is_page('privacy-policy') || is_page('service')) {
+        wp_enqueue_style('moe-contact', $uri . '/css/contact.css', array('moe-style'), filemtime($dir . '/css/contact.css'));
+    }
+
     wp_enqueue_script('moe-script', $uri . '/js/script.js', array(), filemtime($dir . '/js/script.js'), true);
 }
 add_action('wp_enqueue_scripts', 'moe_portfolio_assets');
@@ -96,6 +100,9 @@ add_filter('pre_get_document_title', function ($title) {
     if (is_page('works'))             return $site . ' | Works';
     if (is_tax('works_category'))     return $site . ' | Works | ' . single_term_title('', false);
     if (is_page('about'))             return $site . ' | About';
+    if (is_page('service'))             return $site . ' | Service';
+    if (is_page('contact'))           return $site . ' | Contact';
+    if (is_page('privacy-policy'))    return $site . ' | プライバシーポリシー';
     if (is_singular('works'))         return $site . ' | ' . get_the_title();
     if (is_singular())               return $site . ' | ' . get_the_title();
     if (is_404())                    return $site . ' | ページが見つかりません';
